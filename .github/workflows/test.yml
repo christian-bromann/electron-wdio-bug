@@ -1,0 +1,21 @@
+name: Tests
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: 📦 Install Dependencies
+        run: npm install
+      - name: 🧪 Run Tests
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: npm run wdio
+          options: "-screen 0 1600x1200x24"
